@@ -1,0 +1,172 @@
+<div class="tableUtilities">
+  <div class="row float-right pt-0.5">
+    <!-- table search input -->
+    <mat-form-field appearance="standard">
+      <input
+        matInput
+        id="search"
+        type="search"
+        placeholder="ID / Title / Zipcode ..."
+        (keyup)="applyFilter($event)"
+      />
+    </mat-form-field>
+    <!-- filter button -->
+    <button
+      class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+    >
+      <div class="row iconColor"><mat-icon>filter_alt</mat-icon>Filter</div>
+    </button>
+    <!-- column customize button -->
+    <button
+      (click)="showCustomizeDropdown()"
+      class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+    >
+      <div class="row iconColor"><mat-icon>settings</mat-icon>Customize</div>
+      <mat-selection-list
+        class="dropdown-content"
+        id="myDropdown"
+        (selectionChange)="selectionChange($event)"
+      >
+        <mat-list-option
+          *ngFor="let columnName of displayedColumns"
+          checkboxPosition="before"
+          [value]="columnName"
+          [selected]="columnSet.get(columnName)"
+        >
+          {{ columnName }}
+        </mat-list-option>
+      </mat-selection-list>
+    </button>
+  </div>
+</div>
+<table mat-table [dataSource]="datasource" matSort class="mat-elevation-z8">
+  <!-- checkbox column -->
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox
+        (change)="$event ? masterToggle() : null"
+        [checked]="selection?.hasValue() && isAllSelected()"
+        [indeterminate]="selection?.hasValue() && !isAllSelected()"
+      >
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox
+        (click)="$event.stopPropagation()"
+        (change)="$event ? selection?.toggle(row) : null"
+        [checked]="selection.isSelected(row)"
+      >
+      </mat-checkbox>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="workOrderNumber">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sort by Work order number"
+    >
+      WORK ORDER NUMBER
+    </th>
+    <td mat-cell *matCellDef="let element">{{ element.workOrderNumber }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Job Title">
+    <th mat-header-cell *matHeaderCellDef>JOB TITLE</th>
+    <td mat-cell *matCellDef="let element">{{ element.jobTitle }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Customer">
+    <th mat-header-cell *matHeaderCellDef>CUSTOMER</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.customerName }} <br />
+      {{ element.customerAddress }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Employee">
+    <th mat-header-cell *matHeaderCellDef>EMPLOYEES ASSIGNED</th>
+    <td mat-cell *matCellDef="let element">
+      <img
+        class="empImage rounded-lg"
+        src="{{ element.employeeImg }}"
+        alt="profile_picture"
+      />
+      <p>
+        {{ element.employeeAssigned }} <br /><span style="color: #64748b">
+          {{ element.employeeTeam }}</span
+        >
+      </p>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Scheduled Date">
+    <th mat-header-cell *matHeaderCellDef>SCHEDULED DATE</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.startDate | date : "dd/MM/yyyy hh:mm" }} &#8594;
+      {{ element.endDate | date : "dd/MM/yyyy hh:mm" }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Category">
+    <th mat-header-cell *matHeaderCellDef>CATEGORY</th>
+    <td mat-cell *matCellDef="let element">{{ element.category }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Status">
+    <th mat-header-cell *matHeaderCellDef>STATUS</th>
+    <td mat-cell *matCellDef="let element">
+      <span
+        *ngIf="element.status == 'New'"
+        class="bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400"
+        >{{ element.status }}</span
+      >
+      <span
+        *ngIf="element.status == 'Sent to Service Provider'"
+        class="bg-orange-100 text-orange-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-orange-400 border border-orange-400"
+        >{{ element.status }}</span
+      >
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Priority">
+    <th mat-header-cell *matHeaderCellDef>PRIORITY</th>
+    <td mat-cell *matCellDef="let element">
+      <span
+        *ngIf="element.priority == 'LOW'"
+        class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400"
+        >{{ element.priority }}</span
+      >
+      <span
+        *ngIf="element.priority == 'MEDIUM'"
+        class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400"
+        >{{ element.priority }}</span
+      >
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="selectedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: selectedColumns"></tr>
+</table>
+
+<mat-paginator
+  #paginator
+  [length]="length"
+  [pageIndex]="pageIndex"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[6, 10]"
+  showFirstLastButtons
+  (page)="onPaginateChange($event)"
+>
+</mat-paginator>
+<div class="go-to-container">
+  <div class="go-to-label">Go To:</div>
+  <mat-form-field>
+    <input
+      type="number"
+      [(ngModel)]="goTo"
+      (change)="goToChange()"
+      class="bg-gray-50 border border-gray-300 rounded-lg max-w-14"
+    />
+  </mat-form-field>
+</div>
