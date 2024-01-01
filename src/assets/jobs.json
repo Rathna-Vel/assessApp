@@ -112,7 +112,11 @@
         },
         {
             "job_uid": "18ccec90-7731-11ee-af24-7515efe796bc",
-            "customer": null,
+            "customer": {
+                "customer_last_name": "V",
+                "customer_first_name": "Charles",
+                "customer_uid": "b5554b00-0593-11ec-adaf-cbc38b630fba"
+            },
             "prefix": "Q3_0001",
             "assigned_to": [
                 {

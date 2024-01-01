@@ -86,17 +86,19 @@
 
   <ng-container matColumnDef="Employee">
     <th mat-header-cell *matHeaderCellDef>EMPLOYEES ASSIGNED</th>
-    <td mat-cell *matCellDef="let element">
+    <td mat-cell *matCellDef="let element" class="employee">
       <img
-        class="empImage rounded-lg"
+        class="empImage rounded-md"
         src="{{ element.employeeImg }}"
         alt="profile_picture"
       />
-      <p>
-        {{ element.employeeAssigned }} <br /><span style="color: #64748b">
-          {{ element.employeeTeam }}</span
-        >
-      </p>
+      <div>
+        <p>
+          {{ element.employeeAssigned }} <br /><span style="color: #64748b">
+            {{ element.employeeTeam }}</span
+          >
+        </p>
+      </div>
     </td>
   </ng-container>
 
@@ -115,7 +117,7 @@
 
   <ng-container matColumnDef="Status">
     <th mat-header-cell *matHeaderCellDef>STATUS</th>
-    <td mat-cell *matCellDef="let element">
+    <td mat-cell *matCellDef="let element" style="white-space: nowrap">
       <span
         *ngIf="element.status == 'New'"
         class="bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400"
@@ -148,25 +150,26 @@
   <tr mat-header-row *matHeaderRowDef="selectedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: selectedColumns"></tr>
 </table>
-
-<mat-paginator
-  #paginator
-  [length]="length"
-  [pageIndex]="pageIndex"
-  [pageSize]="pageSize"
-  [pageSizeOptions]="[6, 10]"
-  showFirstLastButtons
-  (page)="onPaginateChange($event)"
->
-</mat-paginator>
-<div class="go-to-container">
-  <div class="go-to-label">Go To:</div>
-  <mat-form-field>
-    <input
-      type="number"
-      [(ngModel)]="goTo"
-      (change)="goToChange()"
-      class="bg-gray-50 border border-gray-300 rounded-lg max-w-14"
-    />
-  </mat-form-field>
+<div class="overflow-auto row bg-white">
+  <mat-paginator
+    #paginator
+    [length]="length"
+    [pageIndex]="pageIndex"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[4, 6, 10]"
+    showFirstLastButtons
+    (page)="onPaginateChange($event)"
+  >
+  </mat-paginator>
+  <div class="go-to-container">
+    <div class="go-to-label">Go To:</div>
+    <mat-form-field>
+      <input
+        type="number"
+        [(ngModel)]="goTo"
+        (change)="goToChange()"
+        class="bg-gray-50 border border-gray-300 rounded-md max-w-14 pl-4"
+      />
+    </mat-form-field>
+  </div>
 </div>

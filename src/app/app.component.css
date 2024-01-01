@@ -1,12 +1,13 @@
 a:hover {
-    background-color: #e44a19;
+    background: #e44a19;
 }
 
 a {
     padding-left: 0px;
     padding-right: 0px;
     margin-bottom: 20px;
-    width: auto;
+    width: 30px;
+    height: auto !important;
     margin-left: 10px;
     margin-right: 15px;
 }
@@ -35,6 +36,11 @@ mat-sidenav-content {
 mat-icon {
     overflow: visible;
     color: #a0aeb8;
+}
+
+.navIcons {
+    padding-left: 3px;
+    padding-top: 2px;
 }
 
 .list-item-active {

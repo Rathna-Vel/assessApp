@@ -1,0 +1,11 @@
+@import '~@angular/material/theming';
+@include mat-core();
+$testing-mat-table-primary: mat-palette($mat-indigo);
+$testing-mat-table-accent: mat-palette($mat-pink, A200, A100, A400);
+$testing-mat-table-warn: mat-palette($mat-red);
+
+
+$testing-mat-table-theme: mat-light-theme($testing-mat-table-primary, $testing-mat-table-accent, $testing-mat-table-warn);
+
+
+@include angular-material-theme($testing-mat-table-theme);

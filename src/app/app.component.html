@@ -15,7 +15,7 @@
         (click)="navClicked('Dashboard')"
         [class.list-item-active]="selectedNav == 'Dashboard'"
       >
-        <mat-icon matListIcon> bar_chart</mat-icon>
+        <mat-icon class="navIcons" matListIcon> bar_chart</mat-icon>
       </a>
 
       <a
@@ -24,7 +24,7 @@
         (click)="navClicked('Jobs')"
         [class.list-item-active]="selectedNav == 'Jobs'"
       >
-        <mat-icon matListIcon>business_center</mat-icon>
+        <mat-icon class="navIcons" matListIcon>business_center</mat-icon>
       </a>
 
       <a
@@ -33,7 +33,7 @@
         (click)="navClicked('Settings')"
         [class.list-item-active]="selectedNav == 'Settings'"
       >
-        <mat-icon matListIcon>settings</mat-icon>
+        <mat-icon class="navIcons" matListIcon>settings</mat-icon>
       </a>
     </mat-nav-list>
   </mat-sidenav>
@@ -47,7 +47,8 @@
       </mat-form-field>
       <!-- notification icon -->
       <mat-icon class="absolute top-0 right-0 h-16 w-16 notificationIcon"
-        >notifications_none</mat-icon>
+        >notifications_none</mat-icon
+      >
       <!-- profile icon -->
       <div class="absolute top-0 right-0 h-16 w-16 ...">
         <img src="./../assets/icons/profile.jpg" class="rounded-full p-2.5" />

@@ -19,6 +19,18 @@ button {
 th {
   background-color: #f8fafc;
   color: #64748b;
+  font-weight: 500;
+  font-family: inherit;
+  font-size: small;
+}
+
+td {
+  width: max-content;
+}
+
+.employee {
+  display: flex;
+  white-space: nowrap;
 }
 
 table {
@@ -73,8 +85,10 @@ table {
 }
 
 .empImage {
-  max-width: 10% !important;
   display: inline;
+  height: 70px;
+  width: auto;
+  padding: 5px 0 10px 0;
 }
 
 mat-paginator {

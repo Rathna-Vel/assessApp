@@ -9,7 +9,7 @@ const routes: Routes = [
   {path: '', component: ListingTableComponent},
   {path: 'listingPage', component: ListingTableComponent},
   {path: 'settings', component: SettingsComponent},
-  {path: 'dashboard', component: DashboardComponent}
+  {path: 'dashboard', component: DashboardComponent},
 ];
 
 @NgModule({

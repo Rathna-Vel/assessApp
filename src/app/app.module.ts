@@ -28,7 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
     ListingTableComponent,
     DashboardComponent,
     SettingsComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
